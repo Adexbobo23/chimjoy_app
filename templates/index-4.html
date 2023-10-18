@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    {% load static %}
+    <title>Chimjoy - Multipurpose Vehicle Car Rental</title>
+    <link rel="icon" href="{% static 'images/icon.png' %}" type="image/gif" sizes="16x16">
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Rentaly - Multipurpose Vehicle Car Rental Website Template" name="description">
+    <meta content="" name="keywords">
+    <meta content="" name="author">
+    <!-- CSS Files
+    ================================================== -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" id="bootstrap">
+    <link href="{% static 'css/mdb.min.css' %}" rel="stylesheet" type="text/css" id="mdb">
+    <link href="{% static 'css/plugins.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/coloring.css' %}" rel="stylesheet" type="text/css">
+    <!-- color scheme -->
+    <link id="colors" href="{% static 'css/colors/scheme-01.css' %}" rel="stylesheet" type="text/css">
+
+    <style>
+        /* Style for the destination section */
+        .destination {
+            background-color: #fff;
+            padding: 60px 0;
+            margin: 70px;
+        }
+    
+        .heading {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+    
+        .heading span {
+            color: #008000; /* Green color for the "Our destinations" span */
+        }
+    
+        .box-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+    
+        .box {
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            width: calc(33.33% - 20px); /* Set width to 33.33% (1/3) minus margin */
+            margin: 20px 0;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.2s;
+            box-sizing: border-box; /* Include padding and border in box size */
+        }
+    
+        .box:hover {
+            transform: scale(1.05);
+        }
+    
+        .image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+    
+        .content p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+    
+        .content a {
+            color: #008000; /* Green color for the "Book a Ride" link */
+            text-decoration: none;
+        }
+    
+        .content a:hover {
+            text-decoration: underline;
+        }
+    
+        /* Media query for screens smaller than 768px (e.g., mobile devices) */
+        @media (max-width: 768px) {
+            .box {
+                width: calc(50% - 20px); /* Set width to 50% (2 boxes per row) for smaller screens */
+            }
+        }
+    
+        /* Media query for screens smaller than 480px (e.g., smaller mobile devices) */
+        @media (max-width: 480px) {
+            .box {
+                width: 100%; /* Set width to 100% (1 box per row) for even smaller screens */
+            }
+        }
+    </style>
+    
+</head>
+
+<body onload="initialize()">
+    <div id="wrapper">
+        
+        <!-- page preloader begin -->
+        <!-- <div id="de-preloader"></div> -->
+        <!-- page preloader close -->
+
+        <!-- header begin -->
+        <header class="transparent scroll-light has-topbar">
+            <div id="topbar" class="topbar-dark text-light">
+                <div class="container">
+                    <div class="topbar-left xs-hide">
+                        <div class="topbar-widget">
+                            <div class="topbar-widget"><a href="#"><i class="fa fa-phone"></i>+2348077880262</a></div>
+                            <div class="topbar-widget"><a href="#"><i class="fa fa-envelope"></i>hq@chimjoylogistics.com.ng</a></div>
+                            <div class="topbar-widget"><a href="#"><i class="fa fa-clock-o"></i>Mon - Fri 7:00am - 10:00pm</a></div>
+                        </div>
+                    </div>
+                
+                    <div class="topbar-right">
+                        <div class="social-icons">
+                            <a href="#"><i class="fa fa-facebook fa-lg"></i></a>
+                            <a href="#"><i class="fa fa-twitter fa-lg"></i></a>
+                            <a href="#"><i class="fa fa-youtube fa-lg"></i></a>
+                            <a href="#"><i class="fa fa-pinterest fa-lg"></i></a>
+                            <a href="#"><i class="fa fa-instagram fa-lg"></i></a>
+                        </div>
+                    </div>  
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            {% if user.is_authenticated %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="de-flex sm-pt10">
+                            <div class="de-flex-col">
+                                <div class="de-flex-col">
+                                    <!-- logo begin -->
+                                    <div id="logo">
+                                        <a href="{% url 'home' %}">
+                                            <img class="logo-1" src="{% static 'images/chimjoylogo.png' %}" alt="" width="100px" height="50px">
+                                            <img class="logo-2" src="{% static 'images/chimjoylogo.png' %}" alt="" width="100px" height="50px">
+                                        </a>
+                                    </div>
+                                    <!-- logo close -->
+                                </div>
+                            </div>
+                            <div class="de-flex-col header-col-mid">
+                                <ul id="mainmenu">
+                                    <li><a class="menu-item" href="{% url 'home' %}">Home</a>
+                                    </li>
+                                    <li><a class="menu-item" href="{% url 'booking' %}">Book A Ride</a></li>
+                                    <li><a class="menu-item" href="{% url 'cars' %}">Rent A Car</a></li>
+                                    <li><a class="menu-item" href="{% url 'about' %}">About Us</a></li>
+                                    <li>
+                                        <li><a class="menu-item" href="{% url 'contact' %}">Contact</a></li>
+                                    </li>
+                                    <li><a class="menu-item" href="{% url 'dashboard' %}">My Account</a>
+                                        <ul>
+                                            <li><a class="menu-item" href="{% url 'dashboard' %}">Dashboard</a></li>
+                                            <li><a class="menu-item" href="{% url 'profilee' %}">My Profile</a></li>
+                                            <li><a class="menu-item" href="{% url 'orders' %}">My Orders</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="de-flex-col">
+                                <div class="menu_side_area">
+                                    <a href="{% url 'logoutt' %}" class="btn-main">Log out</a>
+                                    <span id="menu-btn"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="de-flex sm-pt10">
+                            <div class="de-flex-col">
+                                <div class="de-flex-col">
+                                    <!-- logo begin -->
+                                    <div id="logo">
+                                        <a href="{% url 'home' %}">
+                                            <img class="logo-1" src="{% static 'images/chimjoylogo.png' %}" alt="" width="100px" height="50px">
+                                            <img class="logo-2" src="{% static 'images/chimjoylogo.png' %}" alt="" width="100px" height="50px">
+                                        </a>
+                                    </div>
+                                    <!-- logo close -->
+                                </div>
+                            </div>
+                            <div class="de-flex-col header-col-mid">
+                                <ul id="mainmenu">
+                                    <li><a class="menu-item" href="{% url 'home' %}">Home</a>
+                                    </li>
+                                    <li><a class="menu-item" href="{% url 'booking' %}">Book A Ride</a></li>
+                                    <li><a class="menu-item" href="{% url 'cars' %}">Rent A Car</a></li>
+                                    <li><a class="menu-item" href="{% url 'about' %}">About Us</a></li>
+                                    <li>
+                                        <li><a class="menu-item" href="{% url 'contact' %}">Contact</a></li>
+                                    </li>
+                                    <li><a class="menu-item" href="{% url 'dashboard' %}">My Account</a>
+                                        <ul>
+                                            <li><a class="menu-item" href="{% url 'dashboard' %}">Dashboard</a></li>
+                                            <li><a class="menu-item" href="{% url 'profilee' %}">My Profile</a></li>
+                                            <li><a class="menu-item" href="{% url 'orders' %}">My Orders</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="de-flex-col">
+                                <div class="menu_side_area">
+                                    <a href="{% url 'loginn' %}" class="btn-main">Sign In</a>
+                                    <span id="menu-btn"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </header>
+        <!-- header close -->
+
+        <!-- content begin -->
+        <div class="no-bottom no-top" id="content">
+            <div id="top"></div>
+            <section id="section-hero" aria-label="section" class="jarallax full-height vertical-center">
+                <img src="https://images.unsplash.com/photo-1610647752706-3bb12232b3ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1925&q=80" class="jarallax-img" alt="">
+                <div class="container position-relative z1000">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6 text-light">
+                            <h4><span class="id-color" >Choose Chimjoy Logistics for Your Trips.</span></h4>
+                            <div class="spacer-10"></div>
+                            <h2 class="mb-2">Experience Effortless Trips with Chimjoy Logistics in Owerri And Environs</h2>
+                            <div class="spacer-10"></div>
+                            <p class="lead">We understand the value of your time, the importance of safety, and the desire for convenience. We make every trip a memorable and smooth experience.</p>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="spacer-single sm-hide"></div>
+                            <div class="p-4 rounded-3 shadow-soft" data-bgcolor="#ffffff">
+                                
+
+                                <form name="contactForm" id='contact_form' method="post" action="{% url 'cars' %}">
+                                    {% csrf_token %}
+                                    <h5>What is your vehicle type?</h5>
+
+                                    <div class="de_form de_radio row g-3">
+                                        <div class="radio-img col-lg-3 col-sm-3 col-6">
+                                            <input id="radio-1a" name="Car_Type" type="radio" value="Residential" checked="checked">
+                                            <label for="radio-1a"><img src="{% static 'images/select-form/car.png' %}" alt="">Car</label>
+                                        </div>
+
+                                        <div class="radio-img col-lg-3 col-sm-3 col-6">
+                                            <input id="radio-1b" name="Car_Type" type="radio" value="Office">
+                                            <label for="radio-1b"><img src="{% static 'images/select-form/van.png' %}" alt="">Van</label>
+                                        </div>
+
+                                        <div class="radio-img col-lg-3 col-sm-3 col-6">
+                                            <input id="radio-1c" name="Car_Type" type="radio" value="Commercial">
+                                            <label for="radio-1c"><img src="{% static 'images/select-form/minibus.png' %}" alt="">Minibus</label>
+                                        </div>
+
+                                        <div class="radio-img col-lg-3 col-sm-3 col-6">
+                                            <input id="radio-1d" name="Car_Type" type="radio" value="Retail">
+                                            <label for="radio-1d"><img src="{% static 'images/select-form/sportscar.png' %}" alt="">Prestige</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="spacer-20"></div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6 mb20">
+                                            <h5>Pick Up Location</h5>
+                                            <p>Enter your exact pick-up location to get started.</p>
+                                            <div class="jls-address-preview jls-address-preview--hidden">
+                                                <div class="jls-address-preview__header">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    
+                                        <div class="col-lg-6 mb20">
+                                            <h5>Drop Off Location</h5>
+                                            <p>Specify your drop-off destination for a seamless experience.</p>
+                                            <div class="jls-address-preview jls-address-preview--hidden">
+                                                <div class="jls-address-preview__header">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    
+                                        <div class="col-lg-6 mb20">
+                                            <h5>Pick Up Date & Time</h5>
+                                            <p>Select your preferred pick-up date and time.</p>
+                                            <div class="date-time-field">
+                                                <!-- Your date and time picker can go here if needed -->
+                                            </div>
+                                        </div>
+                                    
+                                        <div class="col-lg-6 mb20">
+                                            <h5>Return Date & Time</h5>
+                                            <p>Indicate your return date and time for a complete booking.</p>
+                                            <div class="date-time-field">
+                                                <!-- Your date and time picker can go here if needed -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    
+
+                                    <input type='submit' id='send_message' value='Book A Ride Now' class="btn-main pull-right">
+
+                                    <div class="clearfix"></div>
+                                    
+                                </form>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <div class="position-absolute d-flex bottom-20">
+                  <div class="de-marquee-list style-2">
+                    <div class="d-item">
+                      <span class="d-item-txt">Relax</span>
+                      <span class="d-item-display">
+                        <i class="d-item-dot"></i>
+                      </span>
+                      <span class="d-item-txt">Rest</span>
+                      <span class="d-item-display">
+                        <i class="d-item-dot"></i>
+                      </span>
+                      <span class="d-item-txt">and</span>
+                      <span class="d-item-display">
+                        <i class="d-item-dot"></i>
+                      </span>
+                      <span class="d-item-txt">Let</span>
+                      <span class="d-item-display">
+                        <i class="d-item-dot"></i>
+                      </span>
+                      <span class="d-item-txt">Chimjoy</span>
+                      <span class="d-item-display">
+                        <i class="d-item-dot"></i>
+                      </span>
+                      <span class="d-item-txt">Make</span>
+                      <span class="d-item-display">
+                        <i class="d-item-dot"></i>
+                      </span>
+                      <span class="d-item-txt">Your</span>
+                      <span class="d-item-display">
+                        <i class="d-item-dot"></i>
+                      </span>
+                      <span class="d-item-txt">Journey</span>
+                      <span class="d-item-display">
+                        <i class="d-item-dot"></i>
+                      </span>
+                      <span class="d-item-txt">Effortless</span>
+                      <span class="d-item-display">
+                        <i class="d-item-dot"></i>
+                      </span>
+                      <!-- <span class="d-item-txt">Truck</span>
+                      <span class="d-item-display">
+                        <i class="d-item-dot"></i>
+                      </span>
+                      <span class="d-item-txt">Minivans</span>
+                      <span class="d-item-display">
+                        <i class="d-item-dot"></i>
+                      </span>
+                      <span class="d-item-txt">Exotic Cars</span>
+                      <span class="d-item-display">
+                        <i class="d-item-dot"></i>
+                      </span> -->
+                     </div>
+                  </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="container">
+                    <div class="row g-5">
+                        <div class="col-lg-6 wow fadeInRight">
+                            <h2> We understand that  <span class="id-color" style="color: blue;">your journey matters,</span> and we're dedicated to ensuring your  ride experience is nothing short of <span class="id-color" style="color: blue;">exceptional</span></h2>
+                        </div>
+                        <div class="col-lg-6 wow fadeInRight" data-wow-delay=".25s">
+                            At Chimjoy, we are dedicated to providing exceptional car rental services to our valued customers. With a commitment to quality, convenience, and customer satisfaction, we strive to make every rental experience a seamless and enjoyable one. We understand that every customer has unique needs and preferences when it comes to renting a car. That's why we maintain a diverse fleet of well-maintained vehicles to cater to various requirements. From compact cars for solo travelers to spacious SUVs for families, we have a wide range of options to choose from.
+                        </div>
+                    </div>
+                    <div class="spacer-double"></div>
+                    <div class="row text-center">
+                        <div class="col-md-3 col-sm-6 mb-sm-30">
+                            <div class="de_count wow fadeInUp" data-bgcolor="#f5f5f5" >
+                                <h3 class="timer" data-to="643" data-speed="3000">0</h3>
+                                Completed Orders
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 mb-sm-30">
+                            <div class="de_count wow fadeInUp" data-bgcolor="#f5f5f5">
+                                <h3 class="timer" data-to="497" data-speed="3000">0</h3>
+                                Happy Customers
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 mb-sm-30">
+                            <div class="de_count wow fadeInUp" data-bgcolor="#f5f5f5">
+                                <h3 class="timer" data-to="23" data-speed="3000">0</h3>
+                                Vehicles
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 mb-sm-30">
+                            <div class="de_count wow fadeInUp" data-bgcolor="#f5f5f5">
+                                <h3 class="timer" data-to="24" data-speed="3000">0</h3>
+                                24/7 Support
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <section aria-label="section">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6 offset-lg-3 text-center">
+                            <h2>Our Features</h2>
+                            <p>Say goodbye to the stress of navigating traffic, searching for parking, or worrying about the condition of your ride. With Chimjoy Logistics, all you need to do is sit back, relax, and enjoy the journey.</p>
+                            <div class="spacer-20"></div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-lg-3">
+                            <div class="box-icon s2 p-small mb20 wow fadeInRight" data-wow-delay=".5s">
+                                <i class="fa bg-color fa-trophy"></i>
+                                <div class="d-inner">
+                                    <h4>First class services</h4>
+                                    Experience luxury and exceptional care, Whether you're traveling for business, leisure, or anything in between, our goal is to make every trip you take with us a truly delightful one.
+                                </div>
+                            </div>
+                            <div class="box-icon s2 p-small mb20 wow fadeInL fadeInRight" data-wow-delay=".75s">
+                                <i class="fa bg-color fa-road"></i>
+                                <div class="d-inner">
+                                    <h4>Affordable Pricing</h4>
+                                    Chimjoy offers competitive and affordable pricing, we ensure that you get value for your money. Our commitment is to provide you with a cost-effective solution for all your ride booking and transportation needs.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <img src="{% static 'images/misc/car.png' %}" alt="" class="img-fluid wow fadeInUp">
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="box-icon s2 d-invert p-small mb20 wow fadeInL fadeInLeft" data-wow-delay="1s">
+                                <i class="fa bg-color fa-tag"></i>
+                                <div class="d-inner">
+                                    <h4>Effortless Booking</h4>
+                                    booking a ride with us is very easy. Our user-friendly platform is designed to allow you to submit your bookings with just a few clicks, once your booking is captured our representative will reach out to you immediately to confirm your booking.
+                                </div>
+                            </div>
+                            <div class="box-icon s2 d-invert p-small mb20 wow fadeInL fadeInLeft" data-wow-delay="1.25s">
+                                <i class="fa bg-color fa-map-pin"></i>
+                                <div class="d-inner">
+                                    <h4>Safe and Trustworthy Rides</h4>
+                                    At Chimjoy, your safety is our top priority. We take extensive measures to ensure that every ride you book is a secure and trustworthy experience. Our drivers are thoroughly vetted and trained to provide you with a reliable journey.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="text-light jarallax">
+                <img src="{% static 'images/background/2.jpg' %}" class="jarallax-img" alt="">
+                <div class="container">
+                    <div class="row g-5">
+                        <div class="col-lg-6 wow fadeInRight">
+                            <h2>Our commitment to our customers is at the heart of everything we do. <span class="id-color">Your Ride, </span> <span class="id-color">Your Way.</span></h2>
+                        </div>
+                        <div class="col-lg-6 wow fadeInLeft">
+                            Chimjoy Car Rentals isn't just a car rental agency; we are the key to stress-free and memorable journeys in Owerri and its beautiful environs. We have a track record of reliability, affordability, and convenience, we make every ride with us an unforgettable adventure. We understand that every trip is an opportunity to create lasting memories, and we're here to help you to your desired destination  without stress.  What distinguishes us is our unwavering commitment to our customers. You can reach out to us 24/7 for maximum support. Book your ride with us today for a smooth journey.
+                        </div>
+                    </div>
+                    <div class="spacer-double"></div>
+                    <div class="row text-center">
+                        <div class="col-md-3 col-sm-6 mb-sm-30">
+                            <div class="de_count transparent text-light wow fadeInUp">
+                                <h3 class="timer" data-to="643" data-speed="3000">0</h3>
+                                Completed Orders
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 mb-sm-30">
+                            <div class="de_count transparent text-light wow fadeInUp">
+                                <h3 class="timer" data-to="497" data-speed="3000">0</h3>
+                                Happy Customers
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 mb-sm-30">
+                            <div class="de_count transparent text-light wow fadeInUp">
+                                <h3 class="timer" data-to="23" data-speed="3000">0</h3>
+                                Vehicles
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 mb-sm-30">
+                            <div class="de_count transparent text-light wow fadeInUp">
+                                <h3 class="timer" data-to="24" data-speed="3000">0</h3>
+                                24/7 Support
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- destination section starts  -->
+
+            <!-- <section class="destination" id="destination">
+
+                <div class="heading">
+                    <span>Our destinations</span>
+                    <h1>Just a Few</h1>
+                </div>
+            
+                <div class="box-container">
+            
+                    <div class="box" data-aos="fade-up" data-aos-delay="150">
+                        <div class="image">
+                            <img src="https://cimages.timbu.com/guides/2021/01/sam-mbakwe-international-airport-terminal.jpg" alt="">
+                        </div>
+                        <div class="content">
+                            <p> Owerri Airport</p>
+                            <a href="{% url 'booking' %}">Book a Ride <i class="fas fa-angle-right"></i></a>
+                        </div>
+                    </div>
+            
+                    <div class="box" data-aos="fade-up" data-aos-delay="300">
+                        <div class="image">
+                            <img src="https://q-xx.bstatic.com/xdata/images/hotel/max1024x768/410742558.jpg?k=a73c6fe565d3e284235a65b7e45c4fc228e25fbb5f8f4bb791a37358af9d86fa&o=" alt="">
+                        </div>
+                        <div class="content">
+                            <p>Amber City Hotel</p>
+                            <a href="{% url 'booking' %}">Book a Ride <i class="fas fa-angle-right"></i></a>
+                        </div>
+                    </div>
+            
+                    <div class="box" data-aos="fade-up" data-aos-delay="350">
+                        <div class="image">
+                            <img src="https://lh3.googleusercontent.com/p/AF1QipMimSGgjBdB10I5nTmIAGTYQIH2qSgsHyM8-MoN=s1360-w1360-h1020" alt="">
+                        </div>
+                        <div class="content">
+                            <p>Owerri Mall</p>
+                            <a href="{% url 'booking' %}">Book a Ride <i class="fas fa-angle-right"></i></a>
+                        </div>
+                    </div>
+            
+                    <div class="box" data-aos="fade-up" data-aos-delay="300">
+                        <div class="image">
+                            <img src="https://lh3.googleusercontent.com/p/AF1QipPm1LpmEILtiOiqTFm-I8lUtPr3GSvH0apC3sWp=s1360-w1360-h1020" alt="">
+                        </div>
+                        <div class="content">
+                            <p>The Hive Restaurant </p>
+                            <a href="{% url 'booking' %}">Book a Ride <i class="fas fa-angle-right"></i></a>
+                        </div>
+                    </div>
+            
+                    <div class="box" data-aos="fade-up" data-aos-delay="350">
+                        <div class="image">
+                            <img src="https://www.myschoolgist.com/wp-content/uploads/2022/12/Federal-University-of-Technology-Owerri-FUTO-.jpeg" alt="">
+                        </div>
+                        <div class="content">
+                            <p>Federal University of Technology</p>
+                            <a href="{% url 'booking' %}">Book a Ride <i class="fas fa-angle-right"></i></a>
+                        </div>
+                    </div>
+            
+                    <div class="box" data-aos="fade-up" data-aos-delay="300">
+                        <div class="image">
+                            <img src="https://i0.wp.com/ijeawele.com/wp-content/uploads/2022/06/Feature-scaled.jpg" alt="">
+                        </div>
+                        <div class="content">
+                            <p>Heroes Square Owerri</p>
+                            <a href="{% url 'booking' %}">Book a Ride <i class="fas fa-angle-right"></i></a>
+                        </div>
+                    </div>
+            
+                    <div class="box" data-aos="fade-up" data-aos-delay="300">
+                        <div class="image">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxEc_OnG3n2gmgluh3qoY876slgoFmqEZrjFryoCZIQRKNbiaFjo9i8fZGtDQTbEYsXCw&usqp=CAU" alt="">
+                        </div>
+                        <div class="content">
+                            <p>Protea Hotel Owerri Select</p>
+                            <a href="{% url 'booking' %}">Book a Ride <i class="fas fa-angle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="box" data-aos="fade-up" data-aos-delay="300">
+                        <div class="image">
+                            <img src="https://i.pinimg.com/originals/aa/6d/69/aa6d690890d3a4158bd690a281bf17c8.jpg" alt="">
+                        </div>
+                        <div class="content">
+                            <p>Assumpta maria cathedral</p>
+                            <a href="{% url 'booking' %}">Book a Ride <i class="fas fa-angle-right"></i></a>
+                        </div>
+                    </div>
+            
+                    <div class="box" data-aos="fade-up" data-aos-delay="300">
+                        <div class="image">
+                            <img src="https://ariseafrika.com/wp-content/uploads/2020/12/9a9e5-fb_img_1609159524638.jpg" alt="">
+                        </div>
+                        <div class="content">
+                            <p>Imo Golf Pack</p>
+                            <a href="{% url 'booking' %}">Book a Ride<i class="fas fa-angle-right"></i></a>
+                        </div>
+                    </div>
+            
+                </div>
+            
+            </section> -->
+  
+            <!-- destination section ends -->
+
+            <section id="section-cars">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6 offset-lg-3 text-center">
+                            <h2>Our Cars</h2>
+                            <p>Experience the pleasure of driving with Chimjoy Logistics Car Rental services  
+                                Reserving your desired car now.</p>
+                            <div class="spacer-20"></div>
+                        </div>
+
+                        <div id="items-carousel" class="owl-carousel wow fadeIn">
+                            {% for vehicle in vehicles %}
+                            <div class="col-lg-12">
+                                    <div class="de-item mb30">
+                                        <div class="d-img">
+                                            <img src="{{ vehicle.car_picture_main.url }}" class="img-fluid" alt="{{ vehicle.make }} {{ vehicle.model }}">
+                                        </div>
+                                        <div class="d-info">
+                                            <div class="d-text">
+                                                <h4>{{ vehicle.make }} {{ vehicle.model }} {{ vehicle.year }}</h4>
+                                                <div class="d-item_like">
+                                                    <i class="fa fa-heart"></i><span>74</span>
+                                                </div>
+                                                <div class="d-atr-group">
+                                                    <span class="d-atr"><img src="{% static 'images/icons/1-green.svg' %}" alt=""> {{ vehicle.passenger_capacity }} seats</span>
+                                                    <span class="d-atr"><img src="{% static 'images/icons/2-green.svg' %}" alt=""> {{ vehicle.door }} doors</span>
+                                                    <span class="d-atr"><img src="{% static 'images/icons/3-green.svg' %}" alt=""> {{ vehicle.luggage }} Luggage</span>
+                                                    <span class="d-atr"><img src="{% static 'images/icons/4-green.svg' %}" alt="">{{ vehicle.vehicle_type }}</span>
+                                                </div>
+                                                <div class="d-price">
+                                                    Daily rate from <span>N{{ vehicle.daily_price }}</span>
+                                                    <a class="btn-main" href="{% url 'car-details' vehicle.id %}" >Rent Now</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="text-light jarallax" aria-label="section">
+                <img src="{% static 'images/background/3.jpg' %}" alt="" class="jarallax-img">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 text-light">
+                            <div class="container-timeline">
+                                <ul>
+                                    <li>
+                                        <h4>Book Your Ride</h4>
+                                        <p>Booking a ride with us is easy just fill your ride information and it will be captured on our system.</p>
+                                    </li>
+                                    <li>
+                                        <h4>Our Agent Will Reach Out</h4>
+                                        <p>After booking, our dedicated agent will promptly get in touch with you to confirm your reservation, discuss any specific requirements you might have, and confirm your ride.</p>
+                                    </li>
+                                    <li>
+                                        <h4>Make a Payment</h4>
+                                        <p>Once your booking information is confirmed, will send you the cost of the ride and the available payment methods. Once your payment is processed and confirmed, you're set to embark on your journey.
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <h4>Enjoy Your Ride</h4>
+                                        <p>With payment made and details confirmed, we will assign you a personal agent that will follow up with you from start to finish.</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- <section id="section-news">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6 offset-lg-3 text-center">
+                            <h2>Latest News</h2>
+                            <p>Breaking news, fresh perspectives, and in-depth coverage - stay ahead with our latest news, insights, and analysis.</p>
+                            <div class="spacer-20"></div>
+                        </div>
+                        
+                        <div class="col-lg-4 mb10">
+                                    <div class="bloglist s2 item">
+                                            <div class="post-content">
+                                                <div class="post-image">
+                                                    <div class="date-box">
+                                                        <div class="m">10</div>
+                                                        <div class="d">MAR</div>
+                                                    </div>
+                                                    <img alt="" src="{% static 'images/news/pic-blog-1.jpg' %}" class="lazy">
+                                                </div>
+                                                <div class="post-text">                                                    
+                                                    <h4><a href="news-single.html">Enjoy Best Travel Experience<span></span></a></h4>
+                                                    <p>Dolore officia sint incididunt non excepteur ea mollit commodo ut enim reprehenderit cupidatat labore ad laborum consectetur.</p>
+                                                    <a class="btn-main" href="#">Read More</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                                
+                                <div class="col-lg-4 mb10">
+                                    <div class="bloglist s2 item">
+                                            <div class="post-content">
+                                                <div class="post-image">
+                                                    <div class="date-box">
+                                                        <div class="m">12</div>
+                                                        <div class="d">MAR</div>
+                                                    </div>
+                                                    <img alt="" src="{% static 'images/news/pic-blog-2.jpg' %}" class="lazy">
+                                                </div>
+                                                <div class="post-text">                                                    
+                                                    <h4><a href="news-single.html">The Future of Car Rent<span></span></a></h4>
+                                                    <p>Dolore officia sint incididunt non excepteur ea mollit commodo ut enim reprehenderit cupidatat labore ad laborum consectetur.</p>
+                                                    <a class="btn-main" href="#">Read More</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                                
+                                <div class="col-lg-4 mb10">
+                                <div class="bloglist s2 item">
+                                        <div class="post-content">
+                                            <div class="post-image">
+                                                <div class="date-box">
+                                                    <div class="m">14</div>
+                                                    <div class="d">MAR</div>
+                                                </div>
+                                                <img alt="" src="{% static 'images/news/pic-blog-3.jpg' %}" class="lazy">
+                                            </div>
+                                            <div class="post-text">                                                    
+                                                <h4><a href="news-single.html">Holiday Tips For Backpacker<span></span></a></h4>
+                                                <p>Dolore officia sint incididunt non excepteur ea mollit commodo ut enim reprehenderit cupidatat labore ad laborum consectetur.</p>
+                                                <a class="btn-main" href="news-single.html">Read More</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                    </div>
+                </div>
+            </section> -->
+
+            <!-- <section id="section-testimonials" class="no-top no-bottom">
+                <div class="container-fluid">
+                    <div class="row g-2 p-2 align-items-center">
+
+                        <div class="col-md-4">
+                            <div class="de-image-text">
+                                <div class="d-text">
+                                    <div class="d-quote id-color"><i class="fa fa-quote-right"></i></div>
+                                    <h4>Excellent Service! Car Rent Service!</h4>
+                                    <blockquote>
+                                       I have been using Rentaly for my Car Rental needs for over 5 years now. I have never had any problems with their service. Their customer support is always responsive and helpful. I would recommend Rentaly to anyone looking for a reliable Car Rental provider.
+                                       <span class="by">Stepanie Hutchkiss</span>
+                                   </blockquote>
+                                </div> 
+                                <img src="{% static 'images/testimonial/1.jpg' %}" class="img-fluid" alt="">
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-4">
+                            <div class="de-image-text">
+                                <div class="d-text">
+                                    <div class="d-quote id-color"><i class="fa fa-quote-right"></i></div>
+                                    <h4>Excellent Service! Car Rent Service!</h4>
+                                    <blockquote>
+                                       We have been using Rentaly for our trips needs for several years now and have always been happy with their service. Their customer support is Excellent Service! and they are always available to help with any issues we have. Their prices are also very competitive.
+                                       <span class="by">Jovan Reels</span>
+                                   </blockquote>
+                                </div>
+                                <img src="{% static 'images/testimonial/2.jpg' %}" class="img-fluid" alt="">
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="de-image-text">
+                                <div class="d-text">
+                                    <div class="d-quote id-color"><i class="fa fa-quote-right"></i></div>
+                                    <h4>Excellent Service! Car Rent Service!</h4>
+                                    <blockquote>
+                                       Endorsed by industry experts, Rentaly is the Car Rental solution you can trust. With years of experience in the field, we provide fast, reliable and secure Car Rental services.
+                                       <span class="by">Kanesha Keyton</span>
+                                   </blockquote>
+                                </div>
+                                <img src="{% static 'images/testimonial/3.jpg' %}" class="img-fluid" alt="">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section> -->
+
+            <section id="section-faq">
+                <div class="container">
+                    <div class="row">
+                        <div class="col text-center">
+                            <h2>Frequently asked Questions</h2>
+                            <div class="spacer-20"></div>
+                        </div>
+                    </div>
+                    <div class="row g-custom-x">
+                        <div class="col-md-6 wow fadeInUp">
+                            <div class="accordion secondary">
+                                <div class="accordion-section">
+                                    <div class="accordion-section-title" data-tab="#accordion-1">
+                                        How do I rent a vehicle on this website?
+                                    </div>
+                                    <div class="accordion-section-content" id="accordion-1">
+                                        <p>To rent a vehicle, click on the "Rent Now" or "Book Now" button and fill out the booking form with your pickup location, destination, date, and time. Then, click "Submit" to complete the reservation.</p>
+                                    </div>
+                                    <div class="accordion-section-title" data-tab="#accordion-2">
+                                        What types of vehicles are available for rent?
+                                    </div>
+                                    <div class="accordion-section-content" id="accordion-2">
+                                        <p>We offer a variety of vehicles, including compact cars, SUVs, luxury cars, vans, and more. You can browse our Car List options on our website.</p>
+                                    </div>
+                                    <div class="accordion-section-title" data-tab="#accordion-3">
+                                        How do I return the vehicle after the rental period ends?
+                                    </div>
+                                    <div class="accordion-section-content" id="accordion-3">
+                                        <p>You can return the vehicle to our designated rental location. Please ensure that the vehicle is returned on time and in the same condition as when it was rented.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 wow fadeInUp">
+                            <div class="accordion secondary">
+                                <div class="accordion-section">
+                                    <div class="accordion-section-title" data-tab="#accordion-b-4">
+                                        What documents are required for renting a vehicle?
+                                    </div>
+                                    <div class="accordion-section-content" id="accordion-b-4">
+                                        <p>You will generally need a valid driver's license, proof of insurance, and a valid payment method (credit card). International renters may need additional documentation.</p>
+                                    </div>
+                                    <div class="accordion-section-title" data-tab="#accordion-b-5">
+                                        Can I cancel or modify my reservation?
+                                    </div>
+                                    <div class="accordion-section-content" id="accordion-b-5">
+                                        <p>Yes of course but you just need to take a  few steps by firstly contact the support and you will be guided</p>
+                                    </div>
+                                    <div class="accordion-section-title" data-tab="#accordion-b-6">
+                                        How can I contact customer support if I have further questions or issues?                                    </div>
+                                    <div class="accordion-section-content" id="accordion-b-6">
+                                        <p>You can reach our customer support team via phone, email, or our website's contact form. We are here to assist you with any inquiries or concerns.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+        </div>
+        <!-- content close -->
+        <a href="#" id="back-to-top"></a>
+        <!-- footer begin -->
+        <footer class="text-light">
+            <div class="container">
+                <div class="row g-custom-x">
+                    <div class="col-lg-3">
+                        <div class="widget">
+                            <h5>About Chimjoy</h5>
+                            <p>Where quality meets affordability. We understand the importance of a 
+                                smooth and enjoyable journey without the burden of excessive costs. 
+                                That's why we have meticulously crafted our offerings to provide you 
+                                with top-notch vehicles at minimum expense.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3">
+                        <div class="widget">
+                            <h5>Contact Info</h5>
+                            <address class="s1">
+                                <span><i class="id-color fa fa-map-marker fa-lg"></i>Corporate Office: 65 Christ Church Road, Owerri, Imo State.</span>
+                                <span><i class="id-color fa fa-phone fa-lg"></i>+2348077880262</span>
+                                <span><i class="id-color fa fa-envelope-o fa-lg"></i><a href="mailto:hq@chimjoylogistics.com.ng">hq@chimjoylogistics.com.ng</a></span>
+                                <span><i class="id-color fa fa-file-pdf-o fa-lg"></i><a href="#">Download Brochure</a></span>
+                            </address>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <h5>Quick Links</h5>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="widget">
+                                    <ul>
+                                        <li><a href="{% url 'about' %}">About</a></li>
+                                        <li><a href="{% url 'cars' %}">Cars</a></li>
+                                        <li><a href="{% url 'register' %}">Register</a></li>
+                                        <li><a href="{% url 'booking' %}">Booking</a></li>
+                                        <li><a href="{% url 'contact' %}">Contact</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="widget">
+                            <h5>Social Network</h5>
+                            <div class="social-icons">
+                                <a href="#"><i class="fa fa-facebook fa-lg"></i></a>
+                                <a href="#"><i class="fa fa-twitter fa-lg"></i></a>
+                                <a href="#"><i class="fa fa-linkedin fa-lg"></i></a>
+                                <a href="#"><i class="fa fa-pinterest fa-lg"></i></a>
+                                <a href="#"><i class="fa fa-rss fa-lg"></i></a>
+                            </div>
+                        </div>    
+                    </div>
+                </div>
+            </div>
+            <div class="subfooter">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="de-flex">
+                                <div class="de-flex-col">
+                                    <a href="{% url 'home' %}">
+                                        <p> Copyright @  Chimjoy logistics 2023 All rights reserved!</p>
+                                           <p>designed by <a href="https://bestlinkdigitaltech.com/" target="_blank" style="cursor: pointer; color: #007bff;"> Best Link Digital Tech</a></p>
+                                        </a>
+                                </div>
+                                <ul class="menu-simple">
+                                    <li><a href="#">Terms &amp; Conditions</a></li>
+                                    <li><a href="#">Privacy Policy</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- footer close -->
+    </div>
+   
+    <!-- Javascript Files
+    ================================================== -->
+    <script src="{% static 'js/plugins.js' %}"></script>
+    <script src="{% static 'js/designesia.js' %}"></script>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgiM7ogCAA2Y5pgSk2KXZfxF5S_1jsptA&amp;libraries=places&amp;callback=initPlaces" async="" defer=""></script> -->
+
+</body>
+</html>
